@@ -45,15 +45,17 @@ public class DistinctSets {
             return result;
         }
 
+        // Will return empty if we've already merged this string
         private Optional<Set<String>> mergeSetsWithString(String stringToMerge) {
-            Collection<Set<String>> setsThatHaveStringToMerge = setsByString.get(stringToMerge);
             if (processedStrings.contains(stringToMerge)) {
                 return Optional.empty();
             }
-
             processedStrings.add(stringToMerge);
+
+
             Set<String> result = Sets.newHashSet();
 
+            Collection<Set<String>> setsThatHaveStringToMerge = setsByString.get(stringToMerge);
             for (Set<String> otherSets : setsThatHaveStringToMerge) {
                 for (String otherString : otherSets) {
                     result.add(otherString);
