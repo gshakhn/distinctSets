@@ -37,7 +37,7 @@ public class DistinctSets {
         public List<Set<String>> merge() {
             List<Set<String>> result = Lists.newArrayList();
             for (String string : setsByString.keys()) {
-                Optional<Set<String>> strings = mergeString(string);
+                Optional<Set<String>> strings = mergeSetsWithString(string);
                 if (strings.isPresent()) {
                     result.add(strings.get());
                 }
@@ -45,7 +45,7 @@ public class DistinctSets {
             return result;
         }
 
-        private Optional<Set<String>> mergeString(String stringToMerge) {
+        private Optional<Set<String>> mergeSetsWithString(String stringToMerge) {
             Collection<Set<String>> setsThatHaveStringToMerge = setsByString.get(stringToMerge);
             if (processedStrings.contains(stringToMerge)) {
                 return Optional.empty();
@@ -57,7 +57,7 @@ public class DistinctSets {
             for (Set<String> otherSets : setsThatHaveStringToMerge) {
                 for (String otherString : otherSets) {
                     result.add(otherString);
-                    Optional<Set<String>> otherSetsWithThisString = mergeString(otherString);
+                    Optional<Set<String>> otherSetsWithThisString = mergeSetsWithString(otherString);
                     if (otherSetsWithThisString.isPresent()) {
                         result.addAll(otherSetsWithThisString.get());
                     }
