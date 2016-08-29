@@ -27,16 +27,16 @@ public class DistinctSets {
 
     private class SetMerger {
         Set<String> processedStrings;
-        Multimap<String, Set<String>> valueToSet;
+        Multimap<String, Set<String>> setsByString;
 
-        public SetMerger(Multimap<String, Set<String>> valueToSet) {
-            this.valueToSet = valueToSet;
+        public SetMerger(Multimap<String, Set<String>> setsByString) {
+            this.setsByString = setsByString;
             this.processedStrings = Sets.newHashSet();
         }
 
         public List<Set<String>> merge() {
             List<Set<String>> result = Lists.newArrayList();
-            for (String string : valueToSet.keys()) {
+            for (String string : setsByString.keys()) {
                 Optional<Set<String>> strings = mergeString(string);
                 if (strings.isPresent()) {
                     result.add(strings.get());
@@ -46,7 +46,7 @@ public class DistinctSets {
         }
 
         private Optional<Set<String>> mergeString(String stringToMerge) {
-            Collection<Set<String>> setsThatHaveStringToMerge = valueToSet.get(stringToMerge);
+            Collection<Set<String>> setsThatHaveStringToMerge = setsByString.get(stringToMerge);
             if (processedStrings.contains(stringToMerge)) {
                 return Optional.empty();
             }
